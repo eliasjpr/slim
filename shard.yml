@@ -1,0 +1,25 @@
+name: slim
+version: 0.1.0
+
+authors:
+  - Elias Perez <elias.perez@nytimes.com>
+
+targets:
+  slim:
+    main: src/slim.cr
+
+crystal: 0.31.0
+
+license: MIT
+
+dependencies:
+  onyx:
+    github: onyxframework/onyx
+  
+  clear:
+    github: anykeyh/clear
+    branch: master
+
+  onyx-http:
+    github: onyxframework/http
+    version: ~> 0.8.0
