@@ -22,7 +22,7 @@ class Plan
   column description : String
   column amount : Float64
 
-  def bill_cycle
+  def bill_cycle : Time::Span
     case billing_cycle
     when BillingCycles::Hour  then billing_interval.hour
     when BillingCycles::Day   then billing_interval.day
@@ -31,6 +31,6 @@ class Plan
     when BillingCycles::Year  then billing_interval.year
     else
       raise "Unsupported Billing Cycle!"
-    end
+    end.as(Time::Span)
   end
 end

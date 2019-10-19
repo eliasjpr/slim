@@ -25,7 +25,7 @@ class Subscription
     end
   end
 
-  def total_discounts
-    @total_discounts ||= discounts.to_a.reduce(0.0) { |acc, discount| acc += discount.amount_for(charges) }
+  def total_discounts(charges)
+    discounts.to_a.reduce(0.0) { |acc, discount| acc += discount.amount_for(charges) }
   end
 end

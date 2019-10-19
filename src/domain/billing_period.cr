@@ -5,10 +5,7 @@ class BillingPeriod
   getter start_date : Time
   getter end_date : Time
 
-  def initialize(@start_date, @end_date)
-  end
-
-  def initialize(@start_date, time_span : Time::Span)
+  def initialize(@start_date, time_span : Time::Span | Time::MonthSpan)
     @end_date = @start_date + time_span
   end
 

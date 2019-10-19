@@ -14,7 +14,7 @@ class CreditNote
   column type : CreditNoteTypes
   column created_at : Time, presence: false
 
-  def self.credits_for(id : Int32, billing_period : BillingPeriod) : Float64
+  def self.credits_for(id : Int64, billing_period : BillingPeriod) : Float64
     query.where {
       (customer_id == id) &
         (status == CreditNoteStatus::Issued) &
