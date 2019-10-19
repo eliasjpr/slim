@@ -14,11 +14,11 @@ class CreditNote
   column type : CreditNoteTypes
   column created_at : Time, presence: false
 
-  def self.credits_for(id : Int32, start_date : Time, end_date : Time) : Float64
+  def self.credits_for(id : Int32, billing_period : BillingPeriod) : Float64
     query.where {
       (customer_id == id) &
         (status == CreditNoteStatus::Issued) &
-        (created_at.in?(start_date..end_date))
+        (created_at.in?(billing_period.range))
     }.agg("SUM(amount)", Float64 | Nil) || 0.0
   end
 end

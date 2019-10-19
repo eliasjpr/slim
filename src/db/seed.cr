@@ -1,5 +1,5 @@
-require "../config/application"
-require "../spec/helpers"
+require "../app"
+require "../../spec/helpers"
 require "uuid"
 
 def setup_scenario(id, products : Array(Tuple(Float64, Array(Int32))), num_of_copies : Int32, unit : BillingCycles, interval : Int32)

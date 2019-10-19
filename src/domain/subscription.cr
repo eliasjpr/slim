@@ -24,4 +24,8 @@ class Subscription
       sp.invoice(billing_start_date)
     end
   end
+
+  def total_discounts
+    @total_discounts ||= discounts.to_a.reduce(0.0) { |acc, discount| acc += discount.amount_for(charges) }
+  end
 end

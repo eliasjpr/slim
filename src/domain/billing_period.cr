@@ -8,6 +8,14 @@ class BillingPeriod
   def initialize(@start_date, @end_date)
   end
 
+  def initialize(@start_date, time_span : Time::Span)
+    @end_date = @start_date + time_span
+  end
+
+  def range : Range
+    start_date..end_date.at_end_of_day
+  end
+
   def count
     (end_date - start_date).days
   end

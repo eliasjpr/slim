@@ -15,25 +15,20 @@
 #
 # If you have a per seat/user charge separate from a base recurring charge, you can use 
 # fixed-price add-ons with editable quantities.
-
+require "./price_model"
 module Pricing
   class PerUnitLicensed < PriceModel
-    getter usage : Int64 = 0 
+    getter usage : Int64 = 1 
     getter billing_period : BillingPeriod
     getter plan : Plan
     getter product_plans : ProductPlan::Collection
 
     def initialize(@billing_period, @plan)
       @product_plans = plan.product_plans
-      @usage = plan.subscription.quantity
     end
 
-    def cost
+    def cost : Float64
       (product_charges + plan.amount) * usage
-    end
-
-    private def quantity
-      @plan.subscription.quantity
     end
 
     private def product_charges

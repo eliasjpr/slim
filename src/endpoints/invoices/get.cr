@@ -10,7 +10,7 @@ module Endpoints::Invoices
     end
 
     def call
-      Operations::Subscription::GenerateInvoices.call(params.path.id, start_date)
+      Operations::Subscriptions::GenerateInvoices.call(params.path.id, start_date)
     end
 
     private def start_date : Time

@@ -1,4 +1,4 @@
-module Operations::Subscription
+module Operations::Subscriptions
   class GenerateInvoices
     def self.call(id : Int64, start_date : Time)
       new(id, start_date).call
@@ -15,5 +15,4 @@ module Operations::Subscription
       Subscription.query.find!({id: @id}).invoices(@start_date)
     end
   end
-    
 end

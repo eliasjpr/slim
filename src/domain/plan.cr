@@ -22,10 +22,6 @@ class Plan
   column description : String
   column amount : Float64
 
-  def cost(usage, billing_period)
-    Pricing.cost(usage, billing_period, self)
-  end
-
   def bill_cycle
     case billing_cycle
     when BillingCycles::Hour  then billing_interval.hour
