@@ -17,7 +17,7 @@ dependencies:
     github: onyxframework/onyx
   
   clear:
-    github: anykeyh/clear
+    github: eliasjpr/clear
     branch: master
 
   onyx-http:
