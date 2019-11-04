@@ -1,5 +1,5 @@
 module Serializers::Invoices
-  struct Get
+  struct Index
     include Onyx::HTTP::View
 
     def initialize(@invoices : Array(Bill))

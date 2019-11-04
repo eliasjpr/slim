@@ -1,5 +1,5 @@
 module Endpoints::Invoices
-  struct Get
+  struct Index
     include Onyx::HTTP::Endpoint
 
     params do
