@@ -1,6 +1,6 @@
 require "json"
 
-class Bill
+struct Bill
   include JSON::Serializable
 
   @[JSON::Field(ignore: true)]

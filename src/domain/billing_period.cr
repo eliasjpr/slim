@@ -1,6 +1,6 @@
 require "json"
 
-class BillingPeriod
+struct BillingPeriod
   include JSON::Serializable
   getter start_date : Time
   getter end_date : Time
