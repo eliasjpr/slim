@@ -10,7 +10,9 @@ class SubscriptionPlan
   column id : Int64, primary: true, presence: false
   column quantity : Int64
 
-  def invoice(billing_start_date : Time)
-    Bill.new(self, billing_start_date)
+  def self.invoice_for(subscription_id : Int64, billing_start_date : Time)
+    SubscriptionPlan.query
+      .where(subscription_id: subscription_id)
+      .map { |sp| Bill.new(sp, billing_start_date) }
   end
 end

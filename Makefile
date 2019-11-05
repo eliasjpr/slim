@@ -43,4 +43,6 @@ clean:
 distclean:
 	rm -rf $(SLIM) .crystal .shards libs lib
 
-  
+migrate:
+	crystal src/db/cli.cr -- clear migrate status
+	crystal src/db/cli.cr -- clear migrate
