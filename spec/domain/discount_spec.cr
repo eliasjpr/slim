@@ -2,7 +2,6 @@ require "./spec_helper"
 require "../../src/domain/discount.cr"
 
 describe Discount do
-  current_time = Time.local - 1.month
   subscription = build_subscription
 
   describe "triggers" do

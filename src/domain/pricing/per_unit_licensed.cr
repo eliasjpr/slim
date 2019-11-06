@@ -1,4 +1,4 @@
-# The seat-based model bills a price per quantity upfront on a recurring basis. 
+# The seat-based model bills a price per quantity upfront on a recurring basis.
 # This model best represents billing per user/seat for time based access.
 #
 # EXAMPLES
@@ -8,17 +8,18 @@
 #
 # HOW TO SETUP THIS MODEL
 #
-# The seat-based model is a plan with a base recurring charge and the ability for the 
-# customer to select a quantity. If you are using our Hosted Payment Pages you will want 
-# to select the "Editable Quantity" checkbox, so your subscribers have the ability to set 
+# The seat-based model is a plan with a base recurring charge and the ability for the
+# customer to select a quantity. If you are using our Hosted Payment Pages you will want
+# to select the "Editable Quantity" checkbox, so your subscribers have the ability to set
 # a quantity at sign-up.
 #
-# If you have a per seat/user charge separate from a base recurring charge, you can use 
+# If you have a per seat/user charge separate from a base recurring charge, you can use
 # fixed-price add-ons with editable quantities.
 require "./price_model"
+
 module Pricing
   class PerUnitLicensed < PriceModel
-    getter usage : Int64 = 1 
+    getter usage : Int64 = 1
     getter billing_period : BillingPeriod
     getter plan : Plan
     getter product_plans : ProductPlan::Collection
