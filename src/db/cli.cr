@@ -1,4 +1,4 @@
-require "../../config/application"
+require "../app"
 require "./migrations/*"
 
 def initdb
@@ -8,5 +8,5 @@ end
 initdb
 
 Clear.with_cli do
-  puts "Usage: crystal sample/cli/cli.cr -- clear [args]"
+  puts "Usage: crystal src/cli/cli.cr -- clear [args]"
 end
