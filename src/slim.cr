@@ -1,4 +1,4 @@
 require "./app"
 
 # Boot server
-Slim.listen(port: 3000)
+Slim.listen(port: ENV["PORT"].to_i32)
