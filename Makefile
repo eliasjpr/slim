@@ -12,7 +12,7 @@ all: build
 build: lib $(SLIM)
 
 lib:
-	@shards install --production
+	@shards install
 
 $(SLIM): $(SOURCES) | $(OUT_DIR)
 	@echo "Building $(SLIM) in $@"
@@ -46,3 +46,6 @@ distclean:
 migrate:
 	crystal src/db/cli.cr -- clear migrate status
 	crystal src/db/cli.cr -- clear migrate
+
+ameba:
+	$(OUT_DIR)/ameba
