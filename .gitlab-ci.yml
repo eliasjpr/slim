@@ -58,8 +58,7 @@ Run Specs:
   services:
     - postgres:latest
   script:
-    - AMBER_ENV=test amber db migrate || true
-    - AMBER_ENV=test crystal spec
+    - make spec
 
 Tag Release Images:
   <<: *dind
