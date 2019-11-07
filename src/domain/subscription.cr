@@ -26,6 +26,7 @@ class Subscription
   end
 
   def total_discounts(charges)
+    # ameba:disable Lint/UselessAssign
     discounts.to_a.reduce(0.0) { |acc, discount| acc += discount.amount_for(charges) }
   end
 end
