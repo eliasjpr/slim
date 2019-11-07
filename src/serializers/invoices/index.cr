@@ -3,7 +3,7 @@ module Serializers::Invoices
     include Onyx::HTTP::View
 
     def initialize(@data : Array(Bill))
-      @payload = { data: @data }
+      @payload = {data: @data}
     end
 
     json @payload
