@@ -1,7 +1,6 @@
 stages:
   - build
   - validate
-  - test
   - release
   - deploy
 
@@ -54,7 +53,7 @@ Code Format:
     - crystal tool format --check
 
 Run Specs:
-  stage: test
+  stage: validate
   image: $CONTAINER_TEST_IMAGE
   services:
     - postgres:latest
