@@ -19,6 +19,4 @@ WORKDIR ${APP_ROOT}
 COPY . ${APP_ROOT}
 COPY shard.* ${APP_ROOT}/
 
-RUN make clean build
-
 CMD make run
