@@ -5,12 +5,15 @@ SYSTEM=$(INSTALL_DIR)/slim
 OUT_DIR=$(CURDIR)/bin
 LIB=$(CURDIR)/lib
 SLIM=$(OUT_DIR)/slim
-SOURCES=$(shell find src/ -type f -name '*.cr')
+SOURCES=$(shell find src/ -type f -name 'slim.cr')
 
 all: build
 
 build: lib $(SLIM)
 
+spec: lib | migrate
+	@crystal spec
+	
 lib:
 	@shards install
 
@@ -46,6 +49,9 @@ distclean:
 migrate:
 	crystal src/db/cli.cr -- clear migrate status
 	crystal src/db/cli.cr -- clear migrate
+
+seed:
+	crystal src/db/seed.cr
 
 ameba:
 	$(OUT_DIR)/ameba
