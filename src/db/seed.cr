@@ -36,14 +36,14 @@ create_credit_note(2, 252.17, created_at: start_date + 3.days)
 
 products = [{1.74, [1, 2, 3, 4, 5, 6]}, {8.56, [0]}]
 start_date = Time.parse("09-26-2019", "%m-%d-%Y", Time::Location::UTC)
-setup_scenario(4, products, 1, BillingCycles::Week, 4)
+subscription_plan = setup_scenario(4, products, 1, BillingCycles::Week, 4)
 create_credit_note(1, 5.22, created_at: start_date + 3.days)
 coupon = create_coupon(amount: 12.45)
 create_discount(coupon, subscription_plan.subscription, starts_on: start_date + 3.days)
 
 products = [{1.74, [1, 2, 3, 4, 5, 6]}, {8.56, [0]}]
 start_date = Time.parse("09-26-2019", "%m-%d-%Y", Time::Location::UTC)
-setup_scenario(5, products, 1, BillingCycles::Week, 4)
+subscription_plan = setup_scenario(5, products, 1, BillingCycles::Week, 4)
 create_credit_note(1, 5.22, created_at: start_date + 3.days)
 coupon = create_coupon(percent: 0.45, amount: nil)
 create_discount(coupon, subscription_plan.subscription, id: 5, starts_on: start_date + 3.days)
