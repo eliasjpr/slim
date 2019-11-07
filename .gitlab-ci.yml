@@ -44,6 +44,7 @@ Static Code Analysis:
   stage: validate
   image: $CONTAINER_TEST_IMAGE
   script:
+    - cd /app
     - ./bin/ameba 
   
 Code Format:
