@@ -11,7 +11,7 @@ all: build
 
 build: lib $(SLIM)
 
-spec: migrate
+spec: lib | migrate
 	@crystal spec
 	
 lib:
