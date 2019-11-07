@@ -1,0 +1,86 @@
+stages:
+  - build
+  - validate
+  - test
+  - release
+  - deploy
+
+cache:
+  key: "$CI_BUILD_REF_NAME"
+  paths:
+    - libs
+    - bin
+
+.docker: &dind
+  services:
+    - docker:dind
+  image: docker:latest
+  variables:
+    DOCKER_DRIVER: overlay2
+    DOCKER_HOST: tcp://docker:2375
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker info
+  tags:
+    - docker
+
+variables:
+  CONTAINER_IMAGE: ${CI_REGISTRY_IMAGE}:${CI_BUILD_REF_NAME}_${CI_BUILD_REF}
+  CONTAINER_IMAGE_LATEST: ${CI_REGISTRY_IMAGE}:latest
+  CONTAINER_TEST_IMAGE: ${CI_REGISTRY_IMAGE}:test
+  POSTGRES_DB: slim_test
+  POSTGRES_USER: db_admin
+  POSTGRES_PASSWORD: ""
+
+Build Image:
+  <<: *dind
+  stage: build
+  script:
+    - docker pull $CONTAINER_TEST_IMAGE:latest || true
+    - docker build --cache-from $CONTAINER_TEST_IMAGE -t $CONTAINER_TEST_IMAGE .
+    - docker push $CONTAINER_TEST_IMAGE
+
+Static Code Analysis:
+  stage: validate
+  image: $CONTAINER_TEST_IMAGE
+  script:
+    - ./bin/ameba 
+  
+Code Format:
+  stage: validate
+  image: $CONTAINER_TEST_IMAGE
+  script:
+    - crystal tool format --check
+
+Run Specs:
+  stage: test
+  image: $CONTAINER_TEST_IMAGE
+  services:
+    - postgres:latest
+  script:
+    - AMBER_ENV=test amber db migrate || true
+    - AMBER_ENV=test crystal spec
+
+Tag Release Images:
+  <<: *dind
+  stage: release
+  script:
+    - docker pull $CONTAINER_TEST_IMAGE
+    - docker tag $CONTAINER_TEST_IMAGE $CONTAINER_IMAGE_LATEST
+    - docker tag $CONTAINER_TEST_IMAGE $CONTAINER_IMAGE
+    - docker push $CONTAINER_IMAGE_LATEST
+    - docker push $CONTAINER_IMAGE
+  only:
+    - master
+
+Digital Ocean:
+  stage: deploy
+  image: lachlanevenson/k8s-kubectl:latest
+  script:
+    - kubectl apply -f k8s
+    - kubectl set image deployments/sprinkler-api api=$CONTAINER_IMAGE
+  tags:
+    - kubernetes
+    - cluster
+  only:
+    - master
