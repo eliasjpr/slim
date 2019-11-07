@@ -6,7 +6,8 @@ RUN apt-get update && apt-get install -y \
     libyaml-dev \
     libgmp-dev \
     libreadline-dev \
-    libz-dev
+    libz-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN apt install crystal
 
@@ -19,4 +20,4 @@ COPY . ${APP_ROOT}
 
 RUN make build
 
-CMD make run
+CMD ["make", "run"]

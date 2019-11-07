@@ -8,7 +8,7 @@ module Operations::Subscriptions
     end
 
     def call
-      raise Errors::SubscriptionNotFound.new(@id) unless Subscription.query.find({id: @id})
+      p invoices
       Serializers::Invoices::Index.new(invoices)
     end
 
