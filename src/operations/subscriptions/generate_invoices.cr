@@ -8,12 +8,12 @@ module Operations::Subscriptions
     end
 
     def call
-      raise Errors::SubscriptionNotFound.new(@id) unless Subscription.query.find({id: @id})
       Serializers::Invoices::Index.new(invoices)
     end
 
     private def invoices
       Clear::SQL.transaction do
+        raise Errors::SubscriptionNotFound.new(@id) unless Subscription.query.find({id: @id})
         SubscriptionPlan.invoice_for(@id, @start_date)
       end.not_nil!
     end

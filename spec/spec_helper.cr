@@ -1,4 +1,4 @@
-ENV["CRYSTAL_ENV"] = "test"
+ENV["CRYSTAL_ENV"] = "spec"
 
 require "spec"
 require "../src/app"
