@@ -3,9 +3,6 @@ require "./migrations/*"
 require "onyx/env"
 require "../../spec/helpers"
 
-p ENV["DATABASE_URL"], ENV["CRYSTAL_ENV"]
-exit
-
 def initdb
   Clear.logger.level = ::Logger::INFO
 end
