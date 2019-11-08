@@ -59,9 +59,9 @@ Run Specs:
     - postgres:latest
   script:
     - shards install
-    - export DATABASE_URL=postgres://db_admin:@postgres:5432/slim_test
-    - DATABASE_URL=postgres://db_admin:@postgres:5432/slim_test crystal src/db/cli.cr -- clear migrate
-    - DATABASE_URL=postgres://db_admin:@postgres:5432/slim_test crystal spec
+    - export DATABASE_URL=postgres://db_admin:@postgres/slim_test
+    - DATABASE_URL=postgres://db_admin:@postgres/slim_test crystal src/db/cli.cr -- clear migrate
+    - DATABASE_URL=postgres://db_admin:@postgres/slim_test crystal spec
 
 Tag Release Images:
   <<: *dind
