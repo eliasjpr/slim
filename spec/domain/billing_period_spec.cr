@@ -12,7 +12,7 @@ describe BillingPeriod do
   end
 
   it "calculates all sundays between two days" do
-    billing_period.count_by(Set{0}).should eq 53
+    billing_period.count_by(Set{0}).should eq 52
   end
 
   it "calculates how many week days between two days" do

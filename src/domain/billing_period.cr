@@ -23,7 +23,7 @@ struct BillingPeriod
   end
 
   def series
-    (1..count).map do |n|
+    (1...count).map do |n|
       (Time.local + n.day).day_of_week
     end
   end

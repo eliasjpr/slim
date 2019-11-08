@@ -11,7 +11,7 @@ describe Cost do
   it "calculates the cost for sundays within date range" do
     subject = Cost.new(billing_period, sunday_rate, Set{0})
 
-    subject.total.round(2).should eq 88.51
+    subject.total.round(2).should eq 86.84
   end
 
   it "calculates the cost for daily within date range" do
