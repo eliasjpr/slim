@@ -5,6 +5,7 @@ require "../../spec/helpers"
 
 p ENV["DATABASE_URL"], ENV["CRYSTAL_ENV"]
 exit
+
 def initdb
   Clear.logger.level = ::Logger::INFO
 end
@@ -16,33 +17,32 @@ Clear.with_cli do
 end
 
 Clear.seed do
-  
   # Clear DB
   clear
-  
+
   start_date = Time.parse("09-09-2019", "%m-%d-%Y", Time::Location::UTC)
-  
+
   # # Subs 1
   products = [{1.74, [1, 2, 3, 4, 5, 6]}, {8.56, [0]}]
   setup_scenario(3, products, 1, BillingCycles::Week, 4)
-  
+
   # # Subs 2
   products = [{1.673, [1, 2, 3, 4, 5, 6]}, {8.213, [0]}]
   setup_scenario(1, products, 1, BillingCycles::Week, 26)
   create_credit_note(1, 1.671, created_at: start_date + 3.days)
-  
+
   # # Subs 3
   products = [{1.673, [1, 2, 3, 4, 5, 6]}, {8.213, [0]}]
   setup_scenario(2, products, 1, BillingCycles::Week, 26)
   create_credit_note(2, 252.17, created_at: start_date + 3.days)
-  
+
   products = [{1.74, [1, 2, 3, 4, 5, 6]}, {8.56, [0]}]
   start_date = Time.parse("09-26-2019", "%m-%d-%Y", Time::Location::UTC)
   subscription_plan = setup_scenario(4, products, 1, BillingCycles::Week, 4)
   create_credit_note(1, 5.22, created_at: start_date + 3.days)
   coupon = create_coupon(amount: 12.45)
   create_discount(coupon, subscription_plan.subscription, starts_on: start_date + 3.days)
-  
+
   products = [{1.74, [1, 2, 3, 4, 5, 6]}, {8.56, [0]}]
   start_date = Time.parse("09-26-2019", "%m-%d-%Y", Time::Location::UTC)
   subscription_plan = setup_scenario(5, products, 1, BillingCycles::Week, 4)
