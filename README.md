@@ -10,10 +10,20 @@ This subcription management API is built using the Crystal Language a statically
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+This project uses the following tools
 
-```crystal
+- Crystal programming language 
+- Docker as container
+- Postgres DB as database
+- Kubernetes for deployments
+
+#### MacOS Installation
+
+```
 brew install crystal
+brew install kubernetes-cli kubectl
+brew install postgres
+brew install docker
 ```
 
 ### Installing
@@ -25,12 +35,6 @@ Say what the step will be
 ```
 shards install
 make build run
-```
-
-And repeat
-
-```
-until finished
 ```
 
 End with an example of getting some data out of the system or using it for a little demo
