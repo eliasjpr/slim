@@ -28,7 +28,7 @@ spec:
         - name: slim
           image: registry.gitlab.com/eliasjpr/slim:latest
         imagePullSecrets:
-        - name: deploycred
+        - name: regcred
           ports:
             - containerPort: 80
           env:
