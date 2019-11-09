@@ -79,7 +79,7 @@ Digital Ocean:
   stage: deploy
   image: lachlanevenson/k8s-kubectl:latest
   script:
-    - kubectl apply -f k8s
+    - kubectl apply -f deploy
     - kubectl set image deployments/slim-api api=$CONTAINER_IMAGE
   tags:
     - kubernetes
