@@ -80,7 +80,7 @@ Digital Ocean:
   image: lachlanevenson/k8s-kubectl:latest
   script:
     - kubectl apply -f deploy
-    - kubectl set image deployments/slim-api api=$CONTAINER_IMAGE
+    - kubectl set image deployments/slim-api-deployment api=$CONTAINER_IMAGE
   tags:
     - kubernetes
     - cluster
