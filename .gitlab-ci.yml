@@ -1,6 +1,6 @@
 stages:
   - build
-  - validate
+  - specs
   - release
   - deploy
 
@@ -40,20 +40,20 @@ Build Image:
     - docker push $CONTAINER_TEST_IMAGE
 
 Static Code Analysis:
-  stage: validate
+  stage: specs
   image: $CONTAINER_TEST_IMAGE
   script:
     - cd /app
     - ./bin/ameba 
   
 Code Format:
-  stage: validate
+  stage: specs
   image: $CONTAINER_TEST_IMAGE
   script:
     - crystal tool format --check
 
 Run Specs:
-  stage: validate
+  stage: specs
   image: $CONTAINER_TEST_IMAGE
   services:
     - postgres:latest
@@ -80,7 +80,7 @@ Digital Ocean:
   image: lachlanevenson/k8s-kubectl:latest
   script:
     - kubectl apply -f k8s
-    - kubectl set image deployments/sprinkler-api api=$CONTAINER_IMAGE
+    - kubectl set image deployments/slim-api api=$CONTAINER_IMAGE
   tags:
     - kubernetes
     - cluster
