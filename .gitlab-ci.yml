@@ -78,8 +78,9 @@ Tag Release Images:
 Digital Ocean:
   stage: deploy
   image: lachlanevenson/k8s-kubectl:latest
+  before_script:
+    - kubectl create secret docker-registry deploycred --docker-server=$CI_REGISTRY --docker-username="$CI_DEPLOY_USER" --docker-password="$CI_DEPLOY_PASSWORD" --docker-email="$GITLAB_USER_EMAIL" --dry-run=true -o yaml | kubectl apply -f -
   script:
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     - kubectl apply -f deploy
     - kubectl set image deployments/slim-api-deployment slim=$CONTAINER_IMAGE
   tags:
