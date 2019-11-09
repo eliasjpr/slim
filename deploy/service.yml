@@ -24,11 +24,11 @@ spec:
       labels:
         app: slim-api
     spec:
+      imagePullSecrets:
+          - name: regcred
       containers:
         - name: slim
           image: registry.gitlab.com/eliasjpr/slim:latest
-      imagePullSecrets:
-        - name: regcred
           ports:
             - containerPort: 80
           env:
