@@ -1,0 +1,12 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: slim-ingress
+spec:
+  rules:
+  - host: dev.revium.com
+    http:
+      paths:
+      - backend:
+          serviceName: slim-api-lb
+          servicePort: 80
