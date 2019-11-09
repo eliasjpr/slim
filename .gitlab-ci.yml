@@ -79,6 +79,7 @@ Digital Ocean:
   stage: deploy
   image: lachlanevenson/k8s-kubectl:latest
   script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     - kubectl apply -f deploy
     - kubectl set image deployments/slim-api-deployment slim=$CONTAINER_IMAGE
   tags:
