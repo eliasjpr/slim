@@ -24,6 +24,7 @@ brew install crystal
 brew install kubernetes-cli kubectl
 brew install postgres
 brew install docker
+brew install doctl
 ```
 
 ### Installing
@@ -67,7 +68,15 @@ crystal tool format
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+Deployement is performed using GitLab CI/CD. Deployment scripts are available under the `./deploy` directory
+
+1. Setup a Kubenetes Cluster on Digital Ocean
+2. Download the Certificate file using `doctl` with `doctl kubernetes cluster kubeconfig save slim-cluster`
+3. Add new Kubernetes cluster in GitLab `https://gitlab.com/eliasjpr/slim/clusters` following these instructions `https://docs.gitlab.com/ee/user/project/clusters/add_remove_clusters.html`
+4. Install `Helm Tiller` and `GitLab Runner`
+5. Run the pipeline
+
+Run `kubectl apply -f deploy` to apply changes to the kubernetes cluster from local machine.
 
 ## Built With
 
