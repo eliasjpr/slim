@@ -74,6 +74,9 @@ Deployement is performed using GitLab CI/CD. Deployment scripts are available un
 2. Download the Certificate file using `doctl` with `doctl kubernetes cluster kubeconfig save slim-cluster`
 3. Add new Kubernetes cluster in GitLab `https://gitlab.com/eliasjpr/slim/clusters` following these instructions `https://docs.gitlab.com/ee/user/project/clusters/add_remove_clusters.html`
 4. Install `Helm Tiller` and `GitLab Runner`
+5. Create a deploy token `https://gitlab.com/eliasjpr/slim/-/settings/repository`
+6. Create a private docker registry secret in kubernetes with deploy token info 
+`create secret docker-registry regcred --docker-server=$CI_REGISTRY --docker-username='$CI_DEPLOY_USER' --docker-password='$CI_DEPLOY_PASSWORD' --docker-email='$GITLAB_USER_EMAIL --dry-run=true -o yaml | kubectl apply -f -`
 5. Run the pipeline
 
 Run `kubectl apply -f deploy` to apply changes to the kubernetes cluster from local machine.
