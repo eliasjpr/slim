@@ -23,10 +23,15 @@ module Endpoints::Products
     end
 
     def call
-      status 201
-      product = Product.from_data(params.json.data)
-      product.save!
-      Serializers::Products::Create.new product
+      Operations::Products::Create.call(product) do |product|
+        status 201
+        header("Location", "/products/#{product.id}")
+        Serializers::Product.new(product)
+      end
+    end
+
+    private def product
+      params.json
     end
   end
 end

@@ -1,5 +1,6 @@
 require "../spec_helper"
 require "html"
+
 describe "Endpoints::Products::Create" do
   describe "#call" do
     context "with valid payload" do
@@ -8,8 +9,8 @@ describe "Endpoints::Products::Create" do
         payload = %Q(
           {
             "data": {
-              "title":         "News #{code}",
               "active":        true,
+              "title":         "News #{code}",
               "code":          "#{code}",
               "caption":       "The new york times news paper",
               "description":   "",
@@ -23,6 +24,7 @@ describe "Endpoints::Products::Create" do
 
         response.status_code.should eq 201
         response.body.should contain "data"
+        response.headers["Location"].should eq "/products/#{json["data"]["id"]}"
       end
     end
   end
