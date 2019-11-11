@@ -1,0 +1,29 @@
+version: '3'
+services:
+  redis_db: 
+    image: redis
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+  postgres_db:
+    image: postgres
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=slim_dev
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+  slim:
+    build: .
+    environment: 
+      - REDIS_URL=redis://redis_db:6379
+      - DATABASE_URL=postgres://user:password@postgres_db/slim_dev
+      - CRYSTAL_ENV=production
+    command: make clean build migrate run
+    volumes:
+      - .:/app
+    ports:
+      - "4000:4000"
+    depends_on:
+      - postgres_db
+      - redis_db
+      
