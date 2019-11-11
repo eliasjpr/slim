@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y \
 
 RUN apt install crystal
 
-EXPOSE 8080
+EXPOSE 4000
 
 ENV APP_ROOT /app
 WORKDIR ${APP_ROOT}
