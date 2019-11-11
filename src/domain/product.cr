@@ -12,5 +12,5 @@ class Product
   column attributes : String?
   column deactivate_on : Time?
   column shippable : Bool
-  column type : ProductTypes
+  column kind : ProductTypes
 end

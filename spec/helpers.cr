@@ -81,7 +81,7 @@ def create_product(name, code)
     attributes: nil,
     deactivate_on: Time.local + 1.year,
     shippable: true,
-    type: ::ProductTypes::HomeDelivery
+    kind: ::ProductTypes::HomeDelivery
   )
 end
 
@@ -153,7 +153,7 @@ def create_credit_note(id, amount, status = CreditNoteStatus::Issued, created_at
     memo: "Paper not delivered on monday 16",
     reason: CreditNoteReasons::ProductUnsatisfactory,
     status: status,
-    type: CreditNoteTypes::PrePayment,
+    kind: CreditNoteTypes::PrePayment,
     created_at: created_at
   )
 end

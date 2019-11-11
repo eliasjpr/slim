@@ -14,7 +14,7 @@ class CreateProducs
         t.column :attributes, "JSONB"
         t.column :deactivate_on, "TIMESTAMPTZ"
         t.column :shippable, "BOOLEAN", null: false, default: false
-        t.column :type, :product_types, null: false
+        t.column :kind, :product_types, null: false
 
         t.column :created_at, "TIMESTAMPTZ", index: true, default: "CURRENT_TIMESTAMP"
         t.column :updated_at, "TIMESTAMPTZ", index: true

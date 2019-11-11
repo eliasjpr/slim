@@ -11,7 +11,7 @@ class CreditNote
   column memo : String? = nil
   column reason : CreditNoteReasons
   column status : CreditNoteStatus
-  column type : CreditNoteTypes
+  column kind : CreditNoteTypes
   column created_at : Time, presence: false
 
   def self.credits_for(id : Int64, billing_period : BillingPeriod) : Float64

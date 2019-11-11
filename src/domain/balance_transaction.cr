@@ -19,7 +19,7 @@ class BalanceTransaction
   column invoice_id : Int64
   column amount : Float64 = 0.0
   column ending_balance : Float64 = 0.0
-  column type : BalanceTransactionTypes
+  column kind : BalanceTransactionTypes
   column status : BalanceTransactionStatusType
   column currency : String
   column description : String?
