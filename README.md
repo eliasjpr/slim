@@ -75,11 +75,92 @@ Deployement is performed using GitLab CI/CD. Deployment scripts are available un
 3. Add new Kubernetes cluster in GitLab `https://gitlab.com/eliasjpr/slim/clusters` following these instructions `https://docs.gitlab.com/ee/user/project/clusters/add_remove_clusters.html`
 4. Install `Helm Tiller` and `GitLab Runner`
 5. Create a deploy token `https://gitlab.com/eliasjpr/slim/-/settings/repository`
-6. Create a private docker registry secret in kubernetes with deploy token info 
+6. Create a database url secret in kubernetes `kubectl create secret generic databaseurl --from-literal=DATABASE_URL="{CONNECTION_STIRNG_HERE}"`
+7. Create a private docker registry secret in kubernetes with deploy token info 
 `create secret docker-registry regcred --docker-server=$CI_REGISTRY --docker-username='$CI_DEPLOY_USER' --docker-password='$CI_DEPLOY_PASSWORD' --docker-email='$GITLAB_USER_EMAIL --dry-run=true -o yaml | kubectl apply -f -`
-5. Run the pipeline
+8. Run the pipeline
 
 Run `kubectl apply -f deploy` to apply changes to the kubernetes cluster from local machine.
+
+# Gitlab AutoDevops on DigitalOcean k8s
+
+## Creating k8s cluster on DigitalOcean
+
+1. Create a k8s cluster <https://cloud.digitalocean.com/kubernetes/clusters>
+2. Install kubectl <https://kubernetes.io/docs/tasks/tools/install-kubectl/>
+3. Download config file from cluster page to `~/.kube/config`
+
+## Adding k8s cluster to Gitlab project
+
+More info here: <https://gitlab.com/help/user/project/clusters/index#adding-an-existing-kubernetes-cluster>
+
+Go to the group and add Kubernetes cluster <https://gitlab.com/groups/urbica/-/clusters/>
+
+1. Create a gitlab service account in the default namespace:
+
+```shell
+kubectl create -f - <<EOF
+  apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    name: gitlab
+    namespace: default
+EOF
+```
+
+2. Create a cluster role binding to give the gitlab service account
+   cluster-admin privileges:
+
+```shell
+kubectl create -f - <<EOF
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: gitlab-cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: gitlab
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
+EOF
+```
+
+To determine the `API URL`, run
+
+```shell
+kubectl cluster-info | grep 'Kubernetes master' | awk '/http/ {print $NF}'
+```
+
+To determine the `Token`, list the secrets by running:
+
+```shell
+kubectl get secrets
+```
+
+Note the name of the secret you need the token for. Get the token for the appropriate secret by running:
+
+```shell
+kubectl get secret <SECRET_NAME> -o jsonpath="{['data']['token']}" | base64 -D
+```
+
+To determine the `CA certificate`, run:
+
+```shell
+kubectl get secret <SECRET_NAME> -o jsonpath="{['data']['ca\.crt']}" | base64 -D
+```
+
+Don't forget to enable `RBAC`.
+
+On the cluster settings page install:
+
+- Helm Tiller
+- Ingress
+- Cert Manager
+
+After installing Ingress, check that external ip is set and pointing to the right load balancer <https://gitlab.com/help/user/project/clusters/index.md#getting-the-external-ip-address>
 
 ## Built With
 
