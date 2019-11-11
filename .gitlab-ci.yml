@@ -68,9 +68,6 @@ Endpoints Tests:
   image: $CONTAINER_TEST_IMAGE
   services:
     - postgres:latest
-  before_script:
-    - export DATABASE_URL=postgres://db_admin:@postgres/slim_test
-    - make clean build run
   script:
     - shards install
     - export DATABASE_URL=postgres://db_admin:@postgres/slim_test
