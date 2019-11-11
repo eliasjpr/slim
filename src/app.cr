@@ -2,9 +2,9 @@ require "onyx"
 require "onyx/http"
 require "clear"
 
+require "./domain/**"
 require "./converters/**"
 require "./errors/**"
-require "./domain/**"
 require "./operations/**"
 require "./serializers/**"
 require "./endpoints/**"
@@ -17,6 +17,9 @@ module Slim
 
   # Routes
   Onyx::HTTP.get "/health", Endpoints::Health
+
+  Onyx::HTTP.post "/products", Endpoints::Products::Create 
+
   Onyx::HTTP.get "/subscriptions/:id/invoices/:start_date", Endpoints::Subscriptions::Invoices
   Onyx::HTTP.get "/subscriptions/:id", Endpoints::Subscriptions::Show
 end
