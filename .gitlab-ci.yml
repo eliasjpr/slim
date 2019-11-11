@@ -52,7 +52,7 @@ Code Format:
   script:
     - crystal tool format --check
 
-Run Specs:
+Unit Tests:
   stage: specs
   image: $CONTAINER_TEST_IMAGE
   services:
@@ -61,7 +61,21 @@ Run Specs:
     - shards install
     - export DATABASE_URL=postgres://db_admin:@postgres/slim_test
     - crystal src/db/cli.cr -- clear migrate
-    - crystal spec
+    - crystal spec spec/domain
+
+Endpoints Tests:
+  stage: specs
+  image: $CONTAINER_TEST_IMAGE
+  services:
+    - postgres:latest
+  before_script:
+    - export DATABASE_URL=postgres://db_admin:@postgres/slim_test
+    - make clean build run
+  script:
+    - shards install
+    - export DATABASE_URL=postgres://db_admin:@postgres/slim_test
+    - crystal src/db/cli.cr -- clear migrate
+    - crystal spec spec/domain
 
 Tag Release Images:
   <<: *dind
