@@ -40,7 +40,6 @@ force_link: build | $(INSTALL_DIR)
 	@ln -sf $(SLIM) $(SYSTEM)
 
 clean:
-	rm -rf $(LIB)
 	rm -rf $(SLIM)
 
 distclean:
@@ -51,7 +50,7 @@ migrate:
 	crystal src/db/cli.cr -- clear migrate
 
 seed:
-	crystal src/db/seed.cr
+	crystal src/db/cli.cr -- clear migrate seed
 
 ameba:
 	$(OUT_DIR)/ameba
