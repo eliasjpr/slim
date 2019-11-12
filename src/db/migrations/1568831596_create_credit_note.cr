@@ -13,7 +13,7 @@ class CreateCreditNote
         t.column :memo, "VARCHAR(50)"
         t.column :reason, :credit_note_reasons, null: false
         t.column :status, :credit_note_status, null: false
-        t.column :type, :credit_note_types, null: false
+        t.column :kind, :credit_note_types, null: false
         t.column :created_at, "TIMESTAMPTZ", index: true, default: "CURRENT_TIMESTAMP"
         t.column :updated_at, "TIMESTAMPTZ", index: true
       end

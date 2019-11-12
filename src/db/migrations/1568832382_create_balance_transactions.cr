@@ -11,7 +11,7 @@ class CreateBalanceTransactions
         t.column :invoice_id, "BIGINT", null: false, index: true
         t.column :amount, "FLOAT", null: false, default: 0.0
         t.column :ending_balance, "FLOAT", null: false, default: 0.0
-        t.column :type, :balance_transaction_types
+        t.column :kind, :balance_transaction_types
         t.column :status, :balance_transaction_status
         t.column :currency, "CHAR(3)", null: false, default: "'USD'"
         t.column :description, "VARCHAR(100)"
