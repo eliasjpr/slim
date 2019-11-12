@@ -30,6 +30,11 @@ variables:
   POSTGRES_DB: slim_test
   POSTGRES_USER: db_admin
   POSTGRES_PASSWORD: ""
+  PORT: ""
+  HOST: eliasjpr-slim
+  CRYSTAL_WORKERS: 8
+  LOG_LEVEL: info
+  DB_POOL_SIZE: 1
 
 Build Image:
   <<: *dind
@@ -69,7 +74,6 @@ Endpoints Tests:
   services:
     - name: postgres:latest
     - name: $CONTAINER_TEST_IMAGE
-      alias: localhost
   script:
     - shards install
     - export DATABASE_URL=postgres://db_admin:@postgres/slim_test
