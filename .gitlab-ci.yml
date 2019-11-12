@@ -88,7 +88,7 @@ Endpoints Tests:
   image: tiangolo/docker-with-compose
   before_script:
     - docker-compose build
-    - docker-compose up slim -d
+    - docker-compose up -d slim
   script: 
     - docker-compose run test
   artifacts:
