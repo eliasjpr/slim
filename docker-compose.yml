@@ -22,7 +22,7 @@ services:
       - CRYSTAL_WORKERS=1
       - LOG_LEVEL=info
       - DB_POOL_SIZE=1
-    command: bash -c "crystal spec spec/endpoints"
+    command: bash -c "shards install && crystal spec spec/endpoints"
     volumes:
       - .:/app
     ports:
