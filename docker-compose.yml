@@ -14,7 +14,7 @@ services:
       - DATABASE_URL=postgres://user:password@postgres_db/slim_dev
       - CRYSTAL_ENV=production
       - PORT=4000
-      - HOST=slim
+      - HOST=slim_default
       - CRYSTAL_WORKERS=1
       - LOG_LEVEL=info
       - DB_POOL_SIZE=1
