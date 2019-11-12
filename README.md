@@ -44,11 +44,10 @@ End with an example of getting some data out of the system or using it for a lit
 
 To run project tests
 
-```
-crystal spec
-```
+- *Unit Tests* - `crystal spec spec/domain`
+- *Endpoints Tests* - `crystal spec spec/endpoints` (Must first run server in separate process `make run`)
 
-### And coding style tests
+### Code Formatter
 
 For code formatting this project uses Crystal built-in code formatter
 
