@@ -79,7 +79,7 @@ Unit Tests:
 
 Endpoints Tests:
   stage: specs
-  image: docker/compose
+  image: tiangolo/docker-with-compose
   script: 
     - docker-compose up --build -d
     - docker-compose run test crystal spec spec/endpoints
