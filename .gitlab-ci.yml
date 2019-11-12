@@ -89,6 +89,10 @@ Endpoints Tests:
   script: 
     - docker-compose up --build -d
     - docker-compose run test
+  artifacts:
+    paths:
+    - ./
+    expire_in: 1 week
 
 Tag Release Images:
   <<: *dind
