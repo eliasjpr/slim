@@ -79,10 +79,7 @@ Unit Tests:
 
 Endpoints Tests:
   stage: specs
-  image: docker
-  before_script:
-    - apk add --update py-pip
-    - pip install docker-compose
+  image: docker/compose
   script: 
     - docker-compose up --build -d
     - docker-compose run test crystal spec spec/endpoints
