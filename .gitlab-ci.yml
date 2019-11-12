@@ -82,6 +82,7 @@ Endpoints Tests:
   image: $CONTAINER_TEST_IMAGE
   variables:
     HOST: eliasjpr-slim
+    PORT: 4000
   cache:
     key: build-cache
   services:
