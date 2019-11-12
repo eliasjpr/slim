@@ -1,16 +1,12 @@
 version: '3'
 services:
-  redis_db: 
-    image: redis
-    volumes:
-      - ./tmp/db:/var/lib/postgresql/data
-
   postgres_db:
     image: postgres
     environment:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=slim_dev
+
   test:
     build: .
     environment: 
@@ -23,12 +19,10 @@ services:
       - LOG_LEVEL=info
       - DB_POOL_SIZE=1
     command: bash -c "shards install && crystal spec spec/endpoints"
-    volumes:
-      - .:/app
-    ports:
-      - "4321:4321"
     depends_on:
       - slim
+    volumes:
+      - .:/app
 
   slim:
     build: .
@@ -48,5 +42,4 @@ services:
       - "4000:4000"
     depends_on:
       - postgres_db
-      - redis_db
       
