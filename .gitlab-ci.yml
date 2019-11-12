@@ -81,6 +81,8 @@ Endpoints Tests:
   stage: specs
   services:
     - docker:dind
+  cache:
+    key: build-cache
   variables:
     DOCKER_DRIVER: overlay2
   image: tiangolo/docker-with-compose
