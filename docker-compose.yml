@@ -4,24 +4,49 @@ services:
     image: redis
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
-  db:
+
+  postgres_db:
     image: postgres
     environment:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=slim_dev
+  test:
+    build: .
+    environment: 
+      - REDIS_URL=redis://redis_db:6379
+      - DATABASE_URL=postgres://user:password@postgres_db/slim_dev
+      - CRYSTAL_ENV=production
+      - PORT=4000
+      - HOST=slim
+      - CRYSTAL_WORKERS=1
+      - LOG_LEVEL=info
+      - DB_POOL_SIZE=1
+    command: bash -c "crystal spec spec/endpoints"
+    volumes:
+      - .:/app
+    ports:
+      - "4321:4321"
+    depends_on:
+      - slim
+
   slim:
     build: .
     environment: 
       - REDIS_URL=redis://redis_db:6379
-      - DATABASE_URL=postgres://user:password@db/slim_dev
+      - DATABASE_URL=postgres://user:password@postgres_db/slim_dev
       - CRYSTAL_ENV=production
-    command: make clean build migrate run
+      - CRYSTAL_WORKERS=1
+      - LOG_LEVEL=info
+      - PORT=4000
+      - HOST=0.0.0.0
+      - DB_POOL_SIZE=1
+    command: bash -c "make clean build migrate run"
     volumes:
       - .:/app
     ports:
       - "4000:4000"
     depends_on:
-      - db
+      - postgres_db
       - redis_db
       

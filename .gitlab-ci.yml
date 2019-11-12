@@ -78,33 +78,14 @@ Unit Tests:
     - crystal spec spec/domain
 
 Endpoints Tests:
-  stage: specs
-  image: $CONTAINER_TEST_IMAGE
-  variables:
-    HOST: eliasjpr-slim
-    PORT: 4000
-  cache:
-    key: build-cache
-  services:
-    - postgres:latest
-    - $CONTAINER_TEST_IMAGE
-  script:
-    - shards install
-    - export 
-    - crystal src/db/cli.cr -- clear migrate
-    - crystal spec spec/endpoints
-
-Tag Release Images:
   <<: *dind
-  stage: release
-  script:
-    - docker pull $CONTAINER_TEST_IMAGE
-    - docker tag $CONTAINER_TEST_IMAGE $CONTAINER_IMAGE_LATEST
-    - docker tag $CONTAINER_TEST_IMAGE $CONTAINER_IMAGE
-    - docker push $CONTAINER_IMAGE_LATEST
-    - docker push $CONTAINER_IMAGE
-  only:
-    - master
+  stage: specs
+  before_script:
+    - apk add --no-cache py-pip bash git
+    - pip install docker-compose
+  script: 
+    - docker-compose up --build -d
+    - docker-compose run test crystal spec spec/endpoints
 
 Digital Ocean:
   stage: deploy
