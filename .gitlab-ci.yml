@@ -72,7 +72,7 @@ Endpoints Tests:
     - shards install
     - export DATABASE_URL=postgres://db_admin:@postgres/slim_test
     - crystal src/db/cli.cr -- clear migrate
-    - crystal spec spec/domain
+    - crystal spec spec/endpoints
 
 Tag Release Images:
   <<: *dind
