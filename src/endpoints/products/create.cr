@@ -1,4 +1,3 @@
-
 module Endpoints::Products
   struct Create
     include Onyx::HTTP::Endpoint
@@ -21,7 +20,7 @@ module Endpoints::Products
 
     errors do
       type ProductError(404)
-    end 
+    end
 
     def call
       status 201
