@@ -79,6 +79,10 @@ Unit Tests:
 
 Endpoints Tests:
   stage: specs
+  services:
+    - docker:dind
+  variables:
+    DOCKER_DRIVER: overlay2
   image: tiangolo/docker-with-compose
   script: 
     - docker-compose up --build -d
