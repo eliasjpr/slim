@@ -30,8 +30,6 @@ variables:
   POSTGRES_DB: slim_test
   POSTGRES_USER: db_admin
   POSTGRES_PASSWORD: ""
-  PORT: ""
-  HOST: eliasjpr-slim
   CRYSTAL_WORKERS: 8
   LOG_LEVEL: info
   DB_POOL_SIZE: 1
@@ -82,6 +80,8 @@ Unit Tests:
 Endpoints Tests:
   stage: specs
   image: $CONTAINER_TEST_IMAGE
+  variables:
+    HOST: eliasjpr-slim
   cache:
     key: build-cache
   services:
