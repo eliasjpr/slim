@@ -87,6 +87,18 @@ Endpoints Tests:
     - docker-compose up --build -d
     - docker-compose run test crystal spec spec/endpoints
 
+Tag Release Images:
+  <<: *dind
+  stage: release
+  script:
+    - docker pull $CONTAINER_TEST_IMAGE
+    - docker tag $CONTAINER_TEST_IMAGE $CONTAINER_IMAGE_LATEST
+    - docker tag $CONTAINER_TEST_IMAGE $CONTAINER_IMAGE
+    - docker push $CONTAINER_IMAGE_LATEST
+    - docker push $CONTAINER_IMAGE
+  only:
+    - master
+
 Digital Ocean:
   stage: deploy
   image: lachlanevenson/k8s-kubectl:latest

@@ -11,15 +11,18 @@ all: build
 
 build: lib $(SLIM)
 
-spec: lib | migrate
-	@crystal spec
-	
+unit: lib | migrate
+	@crystal spec spec/domain
+
+endpoints: lib | migrate
+	@crystal spec spec/domain
+
 lib:
 	@shards install
 
 $(SLIM): $(SOURCES) | $(OUT_DIR)
 	@echo "Building $(SLIM) in $@"
-	@crystal build -o $@ src/slim.cr -p --no-debug
+	@crystal build -o $@ src/slim.cr --no-debug
 
 $(OUT_DIR) $(INSTALL_DIR):
 	 @mkdir -p $@

@@ -1,0 +1,5 @@
+files: ./**/*.cr
+run: make clean build run
+---
+files: ./shard.yml
+run: shards install
