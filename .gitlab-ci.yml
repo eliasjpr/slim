@@ -67,7 +67,9 @@ Endpoints Tests:
   stage: specs
   image: $CONTAINER_TEST_IMAGE
   services:
-    - postgres:latest
+    - name: postgres:latest
+    - name: $CONTAINER_TEST_IMAGE
+      alias: localhost
   script:
     - shards install
     - export DATABASE_URL=postgres://db_admin:@postgres/slim_test
