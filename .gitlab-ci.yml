@@ -35,10 +35,16 @@ variables:
   CRYSTAL_WORKERS: 8
   LOG_LEVEL: info
   DB_POOL_SIZE: 1
+  DATABASE_URL: postgres://db_admin:@postgres/slim_test
 
 Build Image:
   <<: *dind
   stage: build
+  cache:
+    key: build-cache
+    paths:
+    - lib/
+    - bin/
   script:
     - docker pull $CONTAINER_TEST_IMAGE:latest || true
     - docker build --cache-from $CONTAINER_TEST_IMAGE -t $CONTAINER_TEST_IMAGE .
@@ -47,6 +53,8 @@ Build Image:
 Static Code Analysis:
   stage: specs
   image: $CONTAINER_TEST_IMAGE
+  cache:
+    key: build-cache
   script:
     - cd /app
     - ./bin/ameba 
@@ -54,29 +62,34 @@ Static Code Analysis:
 Code Format:
   stage: specs
   image: $CONTAINER_TEST_IMAGE
+  cache:
+    key: build-cache
   script:
     - crystal tool format --check
 
 Unit Tests:
   stage: specs
   image: $CONTAINER_TEST_IMAGE
+  cache:
+    key: build-cache
   services:
     - postgres:latest
   script:
     - shards install
-    - export DATABASE_URL=postgres://db_admin:@postgres/slim_test
     - crystal src/db/cli.cr -- clear migrate
     - crystal spec spec/domain
 
 Endpoints Tests:
   stage: specs
   image: $CONTAINER_TEST_IMAGE
+  cache:
+    key: build-cache
   services:
-    - name: postgres:latest
-    - name: $CONTAINER_TEST_IMAGE
+    - postgres:latest
+    - $CONTAINER_TEST_IMAGE
   script:
     - shards install
-    - export DATABASE_URL=postgres://db_admin:@postgres/slim_test
+    - export 
     - crystal src/db/cli.cr -- clear migrate
     - crystal spec spec/endpoints
 
