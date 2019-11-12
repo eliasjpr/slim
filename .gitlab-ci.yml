@@ -78,11 +78,15 @@ Unit Tests:
     - crystal spec spec/domain
 
 Endpoints Tests:
-  <<: *dind
   stage: specs
+  services:
+    - docker:dind
+  image: docker:latest
   before_script:
-    - aptitude -y install docker-compos
-    - ln -s /usr/local/bin/docker-compose /compose/docker-compose
+    - apk add --no-cache py-pip
+    - pip install docker-compose
+    - docker-compose build
+    - docker-compose up -d
   script: 
     - docker-compose up --build -d
     - docker-compose run test crystal spec spec/endpoints
