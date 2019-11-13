@@ -18,10 +18,6 @@ module Endpoints::Products
       end
     end
 
-    errors do
-      type ProductError(404)
-    end
-
     def call
       Operations::Products::Create.call(product) do |product|
         status 201

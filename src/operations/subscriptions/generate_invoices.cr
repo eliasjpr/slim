@@ -13,7 +13,7 @@ module Operations::Subscriptions
 
     private def invoices
       Clear::SQL.transaction do
-        raise Errors::SubscriptionNotFound.new(@id) unless Subscription.query.find({id: @id})
+        raise Errors::NotFound.new(@id, Subscription.name) unless Subscription.query.find({id: @id})
         SubscriptionPlan.invoice_for(@id, @start_date)
       end.not_nil!
     end

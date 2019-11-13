@@ -21,6 +21,8 @@ module Operations::Products
 
     def call
       @product.save!
+    rescue e
+      raise Errors::BadRequest.new(Product.name, e.message)
     end
   end
 end
