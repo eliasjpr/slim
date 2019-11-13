@@ -86,10 +86,9 @@ Endpoints Tests:
   variables:
     DOCKER_DRIVER: overlay2
   image: tiangolo/docker-with-compose
-  before_script:
-    - docker-compose build
-    - docker-compose up -d slim
   script: 
+    - docker-compose up --build -d
+    - sleep 30
     - docker-compose run test
   artifacts:
     paths:
