@@ -10,7 +10,9 @@ module Endpoints::Subscriptions
     end
 
     def call
-      Operations::Subscriptions::GenerateInvoices.call(params.path.id, start_date)
+      Services::Invoices.call params.path.id, start_date do |invoices|
+        Serializers::Invoices::Index.new(invoices)
+      end
     end
 
     private def start_date : Time

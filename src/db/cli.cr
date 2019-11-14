@@ -3,14 +3,17 @@ require "./migrations/*"
 require "onyx/env"
 require "../../spec/helpers"
 
-def initdb
-  Clear.logger.level = ::Logger::INFO
-end
+def setup_scenario(id, products : Array(Tuple(Float64, Array(Int32))), num_of_copies : Int32, unit : BillingCycles, interval : Int32)
+  plan = create_plan("Seed-#{UUID.random}", unit, interval, UsageTypes::Licensed, BillingScheme::PerUnit)
 
-initdb
+  products.each do |(rate, days)|
+    days.map { |d| Time::DayOfWeek.from_value(d) }
+    product = create_product("Prd-#{UUID.random}", ('A'..'Z').to_a.shuffle[0..1].join(""))
+    create_product_plan(product, plan, rate, days)
+  end
 
-Clear.with_cli do
-  puts "Usage: crystal src/cli/cli.cr -- clear [args]"
+  subscription = create_subscription(1, plan.trial_period_days, plan.bill_cycle)
+  create_subscription_plan(subscription, plan, num_of_copies)
 end
 
 Clear.seed do
@@ -48,15 +51,8 @@ Clear.seed do
   create_discount(coupon, subscription_plan.subscription, id: 5, starts_on: start_date + 3.days)
 end
 
-def setup_scenario(id, products : Array(Tuple(Float64, Array(Int32))), num_of_copies : Int32, unit : BillingCycles, interval : Int32)
-  plan = create_plan("Seed-#{UUID.random}", unit, interval, UsageTypes::Licensed, BillingScheme::PerUnit)
+Clear.logger.level = ::Logger::DEBUG
 
-  products.each do |(rate, days)|
-    days.map { |d| Time::DayOfWeek.from_value(d) }
-    product = create_product("Prd-#{UUID.random}", ('A'..'Z').to_a.shuffle[0..1].join(""))
-    create_product_plan(product, plan, rate, days)
-  end
-
-  subscription = create_subscription(1, plan.trial_period_days, plan.bill_cycle)
-  create_subscription_plan(subscription, plan, num_of_copies)
+Clear.with_cli do
+  puts "Usage: crystal src/cli/cli.cr -- clear [args]"
 end

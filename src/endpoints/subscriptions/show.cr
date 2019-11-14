@@ -9,9 +9,10 @@ module Endpoints::Subscriptions
     end
 
     def call
-      subscription = Subscription.find(params.path.id)
-      raise Errors::NotFound.new(params.path.id, Subscription.name) unless subscription
-      Serializers::Subscriptions::Show.new(subscription)
+      Services::Subscriptions.find params.path.id do |subscription|
+        raise Errors::NotFound.new(params.path.id, Subscription.name) unless subscription
+        Serializers::Subscriptions::Show.new subscription.not_nil!
+      end
     end
   end
 end

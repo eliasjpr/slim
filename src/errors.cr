@@ -10,12 +10,12 @@ module Errors
   end
 
   class BadRequest < Onyx::HTTP::Error(400)
-    def initialize(@type : String, message : String?)
+    def initialize(@type : String, message : String?, @errors : String? = nil)
       super(message)
     end
 
     def payload
-      {type: @type}
+      {type: @type, errors: @errors}
     end
   end
 end

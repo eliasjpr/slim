@@ -19,15 +19,15 @@ module Endpoints::Products
     end
 
     def call
-      Operations::Products::Create.call(product) do |product|
+      Services::Products.create product do |product|
         status 201
-        header("Location", "/products/#{product.id}")
-        Serializers::Product.new(product)
+        header "Location", "/products/#{product.not_nil!.id}"
+        Serializers::Product.new product.not_nil!
       end
     end
 
     private def product
-      params.json
+      Product.build_from params.json
     end
   end
 end
