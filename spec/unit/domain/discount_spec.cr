@@ -1,5 +1,5 @@
 require "./spec_helper"
-require "../../src/domain/discount.cr"
+require "../../../src/domain/discount.cr"
 
 describe Discount do
   subscription = build_subscription

@@ -1,5 +1,5 @@
 require "spec"
-require "../../src/domain/billing_period.cr"
+require "../../../src/domain/billing_period.cr"
 
 describe BillingPeriod do
   start_date = Time.parse("2017-01-02", "%Y-%m-%d", Time::Location::UTC)

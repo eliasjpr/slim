@@ -1,5 +1,5 @@
 require "./spec_helper"
-require "../../src/domain/credit_note.cr"
+require "../../../src/domain/credit_note.cr"
 
 describe CreditNote do
   customer_id = 1_i64

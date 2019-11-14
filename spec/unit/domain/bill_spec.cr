@@ -1,5 +1,5 @@
 require "./spec_helper"
-require "../../src/domain/bill.cr"
+require "../../../src/domain/bill.cr"
 
 def setup_scenario(products : Array(Tuple(Float64, Array(Int32))), num_of_copies : Int32, unit : BillingCycles, interval : Int32)
   plan = create_plan(UUID.random.to_s, unit, interval, UsageTypes::Licensed, BillingScheme::PerUnit)

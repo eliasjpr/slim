@@ -15,7 +15,6 @@ module Slim
   Clear.logger.level = Onyx.logger.level
   Clear::SQL.init(ENV["DATABASE_URL"], connection_pool_size: ENV["DB_POOL_SIZE"].to_i32)
 
-  # Routes
   Onyx::HTTP.get "/health", Endpoints::Health
 
   Onyx::HTTP.on "/products" do |router|
@@ -24,6 +23,11 @@ module Slim
     router.get "/:id", Endpoints::Products::Show
   end
 
-  Onyx::HTTP.get "/subscriptions/:id/invoices/:start_date", Endpoints::Subscriptions::Invoices
-  Onyx::HTTP.get "/subscriptions/:id", Endpoints::Subscriptions::Show
+  Onyx::HTTP.on "/invoices" do |router|
+    router.get "/:subscription_id/:start_date", Endpoints::Invoices::Show
+  end
+
+  Onyx::HTTP.on "/subscriptions" do |router|
+    router.get "/:id", Endpoints::Subscriptions::Show
+  end
 end

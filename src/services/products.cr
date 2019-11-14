@@ -1,5 +1,5 @@
 module Services
-  class Products
+  module Products
     def self.find(id : Int64, &block)
       yield Clear::SQL.transaction do
         Product.find!(id)

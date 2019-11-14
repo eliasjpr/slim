@@ -1,4 +1,4 @@
-require "../spec_helper"
+require "./spec_helper"
 
 describe "Products Resource" do
   code = ('a'..'z').to_a.sample(2).join.to_s
@@ -18,21 +18,28 @@ describe "Products Resource" do
 
   describe "GET /products" do
     it "returns a list of products" do
-      id = create_product
+      id = create_product(payload)
       assert 200, "data", CLIENT.get(path: "/products", headers: VERSION_1)
     end
   end
 
   describe "GET /products/:id" do
-    it "returns a single product" do
-      id = create_product
+    it "returns 200 ok with a single product" do
+      id = create_product(payload)
       assert 200, "data", CLIENT.get(path: "/products/#{id}", headers: VERSION_1)
+    end
+
+    it "returns 404 Not found for invalid product id" do
+      id = -1
+      assert 404, "data", CLIENT.get(path: "/products/#{id}", headers: VERSION_1)
     end
   end
 
   describe "PATCH /products/:id" do
-    id = create_product
-    assert 200, "data", CLIENT.get(path: "/products/#{id}", headers: VERSION_1)
+    it "returns 200 ok for patch product" do
+      id = create_product(payload)
+      assert 200, "data", CLIENT.get(path: "/products/#{id}", headers: VERSION_1)
+    end
   end
 
   describe "POST /products" do
@@ -46,7 +53,7 @@ describe "Products Resource" do
   end
 end
 
-def create_product
+def create_product(payload)
   create = CLIENT.post(path: "/products", headers: VERSION_1, body: payload.to_json)
   product = JSON.parse create.body
   product["data"]["id"]

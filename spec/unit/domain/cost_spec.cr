@@ -1,5 +1,5 @@
 require "./spec_helper"
-require "../../src/domain/cost.cr"
+require "../../../src/domain/cost.cr"
 
 describe Cost do
   start_date = Time.parse("2017-01-02", "%Y-%m-%d", Time::Location::UTC)

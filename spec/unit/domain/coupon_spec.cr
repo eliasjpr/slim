@@ -1,5 +1,5 @@
 require "./spec_helper"
-require "../../src/domain/coupon.cr"
+require "../../../src/domain/coupon.cr"
 
 describe Coupon do
   coupon = build_coupon(amount: 3.00)
