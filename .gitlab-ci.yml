@@ -1,6 +1,8 @@
 stages:
   - build
-  - specs
+  - validate
+  - unit
+  - acceptance
   - release
   - deploy
 
@@ -49,7 +51,7 @@ Build Image:
     - docker push $CONTAINER_TEST_IMAGE
 
 Static Code Analysis:
-  stage: specs
+  stage: validate
   image: $CONTAINER_TEST_IMAGE
   cache:
     key: build-cache
@@ -58,7 +60,7 @@ Static Code Analysis:
     - ./bin/ameba 
   
 Code Format:
-  stage: specs
+  stage: validate
   image: $CONTAINER_TEST_IMAGE
   cache:
     key: build-cache
@@ -66,7 +68,7 @@ Code Format:
     - crystal tool format --check
 
 Unit Tests:
-  stage: specs
+  stage: unit
   image: $CONTAINER_TEST_IMAGE
   cache:
     key: build-cache
@@ -78,7 +80,7 @@ Unit Tests:
     - crystal spec spec/domain
 
 Endpoints Tests:
-  stage: specs
+  stage: acceptance
   services:
     - docker:dind
   cache:
