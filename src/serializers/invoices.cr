@@ -1,5 +1,5 @@
-module Serializers::Invoices
-  struct Index
+module Serializers
+  struct Invoices
     include Onyx::HTTP::View
 
     json data: @data

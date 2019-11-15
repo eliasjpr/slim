@@ -19,10 +19,6 @@ module Serializers
       page: {
         limit: @limit, 
         offset: @offset,
-        first: "/products?limit=5&offset=0",
-        last: "/products?limit=5&offset=0",
-        prev: nil,
-        next: "/products?limit=5&offset=1",
       }, 
       data: @products.to_a
     })

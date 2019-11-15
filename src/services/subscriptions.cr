@@ -2,8 +2,7 @@ module Services
   module Subscriptions
     def self.find(id : Int64, &block)
       yield Clear::SQL.transaction do
-        subscription = Subscription.find!(id)
-        subscription
+        Subscription.find!(id)
       end
     end
   end

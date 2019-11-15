@@ -13,7 +13,7 @@ module Endpoints::Invoices
       Services::Invoices.for subscription_id, start_date do |invoices|
         raise Errors::NotFound.new(subscription_id, Subscription.name) unless invoices
         header "Cache-Control", "max-age=1800, s-max-age=3600, must-revalidate"
-        Serializers::Invoices::Index.new invoices.not_nil!
+        Serializers::Invoices.new invoices.not_nil!
       end
     end
 

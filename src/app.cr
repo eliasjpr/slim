@@ -5,7 +5,7 @@ require "clear"
 require "./domain/**"
 require "./converters/**"
 require "./errors"
-require "./Services/**"
+require "./services/**"
 require "./serializers/**"
 require "./endpoints/**"
 

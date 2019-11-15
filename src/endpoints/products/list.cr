@@ -12,7 +12,7 @@ module Endpoints::Products
     def call
       Services::Products.list params.query.offset, params.query.limit do |products|
         header "Cache-Control", "max-age=1800, s-max-age=3600, must-revalidate"
-        Serializers::Products.new products.not_nil!, params.query.offset, params.query.limit
+        Serializers::Products.new products.not_nil!, params.query.limit, params.query.offset
       end
     end
   end
