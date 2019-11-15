@@ -18,7 +18,7 @@ describe "Products Resource" do
 
   describe "GET /products" do
     it "returns a list of products" do
-      id = create_product(payload)
+      create_product(payload)
       assert 200, "data", CLIENT.get(path: "/products", headers: VERSION_1)
     end
   end
