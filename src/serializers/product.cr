@@ -17,10 +17,10 @@ module Serializers
 
     json({
       page: {
-        limit: @limit, 
+        limit:  @limit,
         offset: @offset,
-      }, 
-      data: @products.to_a
+      },
+      data: @products.to_a,
     })
 
     def initialize(@products : ::Product::Collection, @limit : Int32, @offset : Int32)
