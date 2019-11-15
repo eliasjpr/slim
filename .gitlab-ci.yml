@@ -89,7 +89,7 @@ Endpoints Tests:
   script: 
     - docker-compose build
     - sleep 30
-    - docker-compose run slim
+    - docker-compose run slim -d
     - sleep 30
     - docker-compose run test
   artifacts:
