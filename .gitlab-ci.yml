@@ -87,9 +87,7 @@ Endpoints Tests:
     DOCKER_DRIVER: overlay2
   image: tiangolo/docker-with-compose
   script: 
-    - docker-compose build
-    - sleep 30
-    - docker-compose run slim -d
+    - docker-compose up --build -d --quiet-pull --remove-orphans slim
     - sleep 30
     - docker-compose run test
   artifacts:
