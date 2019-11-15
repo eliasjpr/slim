@@ -18,6 +18,6 @@ WORKDIR ${APP_ROOT}
 
 COPY . ${APP_ROOT}
 
-RUN make build
+RUN make clean build
 
 CMD ["make", "run"]

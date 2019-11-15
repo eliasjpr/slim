@@ -1,24 +1,26 @@
-version: '3'
+version:  "3.7"
 services:
-  postgres_db:
+  db:
     image: postgres
     environment:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=slim_dev
+      - POSTGRES_DB=slim_test
 
   test:
     build: .
     environment: 
       - REDIS_URL=redis://redis_db:6379
-      - DATABASE_URL=postgres://user:password@postgres_db/slim_dev
+      - DATABASE_URL=postgres://user:password@db/slim_test
       - CRYSTAL_ENV=production
       - PORT=4000
-      - HOST=slim_default
+      - HOST=slim
       - CRYSTAL_WORKERS=1
-      - LOG_LEVEL=info
+      - LOG_LEVEL=debug
       - DB_POOL_SIZE=1
-    command: bash -c "shards install && crystal spec spec/endpoints"
+    command: bash -c "shards install && crystal spec spec/acceptance"
+    ports:
+      - "4001:4001"
     depends_on:
       - slim
     volumes:
@@ -28,12 +30,12 @@ services:
     build: .
     environment: 
       - REDIS_URL=redis://redis_db:6379
-      - DATABASE_URL=postgres://user:password@postgres_db/slim_dev
+      - DATABASE_URL=postgres://user:password@db/slim_test
       - CRYSTAL_ENV=production
       - CRYSTAL_WORKERS=1
       - LOG_LEVEL=info
       - PORT=4000
-      - HOST=0.0.0.0
+      - HOST=localhost
       - DB_POOL_SIZE=1
     command: bash -c "make clean build migrate run"
     volumes:
@@ -41,5 +43,5 @@ services:
     ports:
       - "4000:4000"
     depends_on:
-      - postgres_db
+      - db
       
